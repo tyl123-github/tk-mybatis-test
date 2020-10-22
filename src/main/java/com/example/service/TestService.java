@@ -18,4 +18,11 @@ public class TestService {
         int i = jpaUserMapper.insertSelective(jpaUser);
         return i == 1 ? jpaUser.getId() : 0;
     }
+
+    public JpaUser getUserById(Long id) {
+        if (id != null) {
+            return jpaUserMapper.selectByPrimaryKey(id);
+        }
+        return null;
+    }
 }

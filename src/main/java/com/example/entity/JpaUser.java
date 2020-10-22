@@ -1,58 +1,31 @@
 package com.example.entity;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Table(name = "jpa_user")
-public class JpaUser {
+@Data
+@ApiModel(value = "用户信息")
+public class JpaUser implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @ApiModelProperty(name = "id", value = "用户id")
     private Long id;
 
+    @ApiModelProperty(name = "userMobile", value = "用户手号")
     @Column(name = "user_mobile")
     private String userMobile;
 
+    @ApiModelProperty(name = "userName", value = "用户名")
     @Column(name = "user_name")
     private String userName;
 
-    /**
-     * @return id
-     */
-    public Long getId() {
-        return id;
-    }
+    @ApiModelProperty(name = "createTime", value = "创建时间")
+    @Column(name = "create_time")
+    private String createTime;
 
-    /**
-     * @param id
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    /**
-     * @return user_mobile
-     */
-    public String getUserMobile() {
-        return userMobile;
-    }
-
-    /**
-     * @param userMobile
-     */
-    public void setUserMobile(String userMobile) {
-        this.userMobile = userMobile;
-    }
-
-    /**
-     * @return user_name
-     */
-    public String getUserName() {
-        return userName;
-    }
-
-    /**
-     * @param userName
-     */
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
 }

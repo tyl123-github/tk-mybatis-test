@@ -1,28 +1,31 @@
 package com.common.response;
 
-public class ApiResponse {
+import com.common.enums.ResultCode;
 
-    public static final String SUCCESS = "200";
-    public static final String SUCCESS_MSG = "成功";
-    public static final String DEFAULT_MSG = "";
-    public static final String PARAM_ERROR = "400";
-    public static final String PARAM_ERROR_MSG = "参数错误";
+/**
+ * 自定义返回工具类
+ *
+ * @param <T> 实体泛型
+ */
+public class ApiResponse<T> {
+
+
     public static final Integer COUNT = 0;
 
-    public static Response success(Object data) {
+    public static <T> Response<T> success(T data) {
         return success(data, COUNT);
     }
 
-    public static Response success(Object data, Integer count) {
-        return response(SUCCESS, data, SUCCESS_MSG, count);
+    public static <T> Response<T> success(T data, Integer count) {
+        return response(ResultCode.SUCCESS.getCode(), data, ResultCode.SUCCESS.getMessage(), count);
     }
 
-    public static Response success(String code, Object data) {
-        return response(code, data, SUCCESS_MSG, COUNT);
+    public static <T> Response<T> success(String code, T data) {
+        return response(code, data, ResultCode.SUCCESS.getMessage(), COUNT);
     }
 
-    public static Response response(String code, Object data, String msg, Integer count) {
-        Response response = new Response();
+    public static <T> Response<T> response(String code, T data, String msg, Integer count) {
+        Response<T> response = new Response<T>();
         response.setCode(code);
         response.setMsg(msg);
         response.setDate(data);
@@ -35,18 +38,18 @@ public class ApiResponse {
     }
 
     public static Response response(String code, Object data) {
-        return response(code, data, DEFAULT_MSG, COUNT);
+        return response(code, data, ResultCode.DEFAULT.getMessage(), COUNT);
     }
 
-    public static Response error() {
-        return error(PARAM_ERROR, PARAM_ERROR_MSG);
+    public static <T> Response<T> error() {
+        return error(ResultCode.VALIDATE_FAILED.getCode(), ResultCode.VALIDATE_FAILED.getMessage());
     }
 
-    public static Response error(String code, String msg) {
+    public static <T> Response<T> error(String code, String msg) {
         return response(code, null, msg, COUNT);
     }
 
     public static Response error(String code) {
-        return error(code, DEFAULT_MSG);
+        return error(code, ResultCode.DEFAULT.getMessage());
     }
 }
